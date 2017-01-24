@@ -1,0 +1,95 @@
+{
+	 "Items": 
+	 {
+		 "Pistol": 
+		 {
+		 	"Name": "Pistol",
+			"Key": "Pistol",
+		 	"Description": "Super Gun",
+			"Icon": "pistolIcon.png",
+		 	"Weight": 2.0,
+		 	"ItemType": "Quality",
+		 	"Category": "WeaponItem",
+		 	"CategoryData":
+		 	{
+		 		"ClipSize" : 10,
+				"AmmoType" : "9mm"
+		 	}
+		 },
+	 	"Water": 
+		 {
+		 	"Name": "Water",
+			"Key": "Water",
+		 	"Description": "Awesome Drink",
+			"Icon": "waterIcon.png",
+		 	"Weight": 0.5,
+		 	"ItemType": "Quantity",
+		 	"Category": "ConsumableItem",
+		 	"CategoryData":
+		 	{
+		 		"Modify" : "Stamina",
+				"Value" : "20"
+		 	}
+		 },
+		 "Medkit": 
+		 {
+		 	"Name": "Medkit",
+			"Key": "Medkit",
+		 	"Description": "Useful thing",
+			"Icon": "medkitIcon.png",
+		 	"Weight": 1.0,
+		 	"ItemType": "Quantity",
+		 	"Category": "ConsumableItem",
+		 	"CategoryData":
+		 	{
+		 		"Modify" : "Health",
+				"Value" : "30"
+		 	}
+		 },
+		"9mmBullet": 
+		 {
+		 	"Name": "9mmBullet",
+			"Key": "9mmBullet",
+		 	"Description": "Works for most pistols",
+			"Icon": "9mmBulletIcon.png",
+		 	"Weight": 0.1,
+		 	"ItemType": "Quantity",
+		 	"Category": "AmmoItem",
+		 	"CategoryData":
+		 	{
+		 		"Modify" : "Health",
+				"Value" : "30"
+		 	}
+		 },
+		 "AmmoBox": 
+		 {
+		 	"Name": "AmmoBox",
+			"Key": "AmmoBox",
+		 	"Description": "Packed 9mm bullets",
+			"Icon": "ammoBoxIcon.png",
+		 	"Weight": 1.0,
+		 	"ItemType": "Quantity",
+		 	"Category": "MiscItem",
+		 	"CategoryData":
+		 	{
+		 		"Modify" : "Health",
+				"Value" : "30"
+		 	}
+		 },
+		 "Jerry": 
+		 {
+		 	"Name": "Jerry",
+			"Key": "Jerry",
+		 	"Description": "Jerry with water",
+			"Icon": "jerryIcon.png",
+		 	"Weight": 2.0,
+		 	"ItemType": "Quantity",
+		 	"Category": "MiscItem",
+		 	"CategoryData":
+		 	{
+		 		"Modify" : "Health",
+				"Value" : "30"
+		 	}
+		 }
+	 }
+}

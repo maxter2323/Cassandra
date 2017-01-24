@@ -1,0 +1,32 @@
+{
+	 "NPCs": 
+	 {
+		 "Ethan": 
+		 {
+            "Name": "Ethan",
+            "View": "Ethan",
+            "Unique": true,
+            "Dialogue": "Ethan_Dialogue",
+            "DefaultStatValue": 30,
+            "Stats":[
+                {"name":"Medicine", "value":50}
+            ],
+            "Inventory":[
+                {"name":"Water", "amount":"5"}
+            ]
+		 },
+         "Crawler": 
+		 {
+            "Name": "Crawler",
+            "View": "Crawler",
+            "Unique": false,
+            "DefaultStatValue": 30,
+            "Stats":[
+
+            ],
+            "Inventory":[
+                {"name":"Water", "amount":"1"}
+            ]
+		 }
+	 }
+}

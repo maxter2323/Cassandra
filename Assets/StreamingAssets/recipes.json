@@ -1,0 +1,41 @@
+{
+	 "Recipes": 
+	 {
+		 "Jerry to water bottles": 
+		 {
+		 	"name": "Jerry to water bottles",
+		 	"description": "Extract water from Jerry",
+            "workbench": "Campfire",
+		 	"requirements":[
+		 		{"name":"Jerry", "count":1, "use": "use"}
+		 	],
+            "results":[
+                {"name":"Water", "count":5, "use": "use"}
+            ]
+		 },
+         "PackPistolAmmo": 
+		 {
+		 	"name": "Pack 9mm Ammo",
+		 	"description": "Pack 9mm ammo(10) into a box",
+            "workbench": "Player",
+		 	"requirements":[
+		 		{"name":"9mmBullet", "count":10, "use": "use"}
+		 	],
+           "results":[
+                {"name":"Water", "count":5, "use": "use"}
+            ]
+		 },
+         "UnpackPistolAmmo": 
+		 {
+		 	"name": "Unpack Pistol Ammo",
+		 	"description": "Extract water from Jerry",
+            "workbench": "Player",
+		 	"requirements":[
+		 		{"name":"AmmoBox", "count":1, "use": "use"}
+		 	],
+           "results":[
+                {"name":"Water", "count":5, "use": "use"}
+            ]
+		 },
+	 }
+}

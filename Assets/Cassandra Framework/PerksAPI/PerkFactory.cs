@@ -5,7 +5,7 @@ using SimpleJSON;
 
 namespace CassandraFramework.Perks
 {
-	public class PerkFactory : IService 
+	public class PerkFactory : IService, IFactory 
 	{
 			/****************************************************************************************/
 			/*										VARIABLES									  	*/
@@ -33,7 +33,24 @@ namespace CassandraFramework.Perks
 				jsonParser = ServiceLocator.GetService<JsonParser>();
 				requirementFactory = ServiceLocator.GetService<RequirementFactory>();
 			}
+			
+			public List<IGameScriptable> MakeAll()
+			{
+				List<IGameScriptable> toreturn = new List<IGameScriptable>();
+				for (int i = 0; i < jsonParser.perksNode.Count; i++)
+				{
+					JSONNode jsonPerk = jsonParser.perksNode[i];
+					IGameScriptable s = MakePerkFromJson(jsonPerk);
+					toreturn.Add(s);
+				}
+				return toreturn;
+			}
 
+			public void Add(object toAdd)
+			{
+				AddPerk(toAdd as Perk);
+			}
+			
 			public void AddPerk(Perk p)
 			{
 				perks.Add(p.key, p);
@@ -47,7 +64,7 @@ namespace CassandraFramework.Perks
 
 			public Perk MakePerkFromJson(string perkKey)
 			{
-				JSONNode jsonPerk = jsonParser.GetPerksData(perkKey);
+				JSONNode jsonPerk = jsonParser.perksNode[perkKey];
 				return MakePerkFromJson(jsonPerk);
 			}
 

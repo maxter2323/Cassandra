@@ -6,7 +6,7 @@ using SimpleJSON;
 namespace CassandraFramework.Dialogues
 {
 
-	public class DialogueFactory : IService 
+	public class DialogueFactory : IService, IFactory 
 	{
 		/****************************************************************************************/
 		/*										VARIABLES									  	*/
@@ -36,6 +36,11 @@ namespace CassandraFramework.Dialogues
 			jsonParser = ServiceLocator.GetService<JsonParser>();
 		}
 
+		public void Add(object toAdd)
+		{
+			AddDialogue(toAdd as Dialogue);
+		}
+
 		public void AddDialogue(Dialogue d)
 		{
 			dialogues.Add(d.key, d);
@@ -47,9 +52,21 @@ namespace CassandraFramework.Dialogues
 			return dialogues[dialogueKey];
 		}
 
+		public List<IGameScriptable> MakeAll()
+		{
+			List<IGameScriptable> toreturn = new List<IGameScriptable>();
+			for (int i = 0; i < jsonParser.dialoguesNode.Count; i++)
+			{
+				JSONNode jsonDialogue = jsonParser.dialoguesNode[i];
+				IGameScriptable s = MakeDialogueFromJson(jsonDialogue);
+				toreturn.Add(s);
+			}
+			return toreturn;
+		}
+		
 		public Dialogue MakeDialogueFromJson(string dialogueName)
 		{
-			JSONNode jsonDialogue = jsonParser.GetDialogueData(dialogueName);
+			JSONNode jsonDialogue = jsonParser.dialoguesNode[dialogueName];
 			return MakeDialogueFromJson(jsonDialogue);
 		}
 

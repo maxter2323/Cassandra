@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Reflection;
 
 namespace CassandraFramework.Dialogues
 {
 
 	[Serializable]
-	public class Dialogue 
+	public class Dialogue : IGameScriptable
 	{
 		/****************************************************************************************/
 		/*										VARIABLES									  	*/
@@ -23,6 +24,10 @@ namespace CassandraFramework.Dialogues
 		/****************************************************************************************/
 		/*										NATIVE METHODS									*/
 		/****************************************************************************************/
+		public IFactory GetFactory()
+		{
+			return (IFactory)ServiceLocator.GetService<DialogueFactory>();
+		}
 
 		public List<DialogueNode> GetNodes()
 		{
@@ -99,12 +104,12 @@ namespace CassandraFramework.Dialogues
 			return toreturn;
 		}
 
-		public void PrepareScripts()
+		public void PrepareScripts(Assembly assembly)
 		{
 			List<GameScript> scripts = GetAllScripts();
 			for (int i = 0; i < scripts.Count; i++)
 			{
-				scripts[i].Prepare();
+				scripts[i].Prepare(assembly);
 			}
 		}
 	}

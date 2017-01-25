@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine.SceneManagement;
 
 public class ModSelectorUI : MonoBehaviour 
@@ -14,7 +12,8 @@ public class ModSelectorUI : MonoBehaviour
 	//Core
 	private CassandraModBuilder modBuilder;
 	private const string SCENE_TO_LOAD = "MainMenu";
-	[SerializeField] bool RebuildOnStart;
+	[SerializeField] bool rebuildOnStart;
+
 	//Buttons
 	[SerializeField] private Button playButton;
 	[SerializeField] private GameObject verticalLayout;
@@ -29,22 +28,19 @@ public class ModSelectorUI : MonoBehaviour
 	{
 		modBuilder = ServiceLocator.GetService<CassandraModBuilder>();
 		playButton.onClick.AddListener(Play);
-		if (RebuildOnStart) modBuilder.BuildAll();
+		if (rebuildOnStart) modBuilder.BuildAll();
 		GetMods();
 	}
 
 	private void GetMods()
 	{
-		toggles.Clear();
-		DirectoryInfo dir = new DirectoryInfo(Application.streamingAssetsPath);
-		FileInfo[] fileInfo = dir.GetFiles("*.*");
-		foreach (FileInfo file in fileInfo) 
+		List<string> fileNames = modBuilder.GetAllModFiles();
+		for (int i = 0; i < fileNames.Count; i++)
 		{
-			if (!(file.Extension == CassandraModBuilder.CASSANDRA_FILE_FORMAT)) continue;
-			GameObject newToggle = Instantiate(togglePrefab);
-			newToggle.transform.SetParent(verticalLayout.transform, false);
-			Toggle toggle = newToggle.GetComponent<Toggle>();
-			toggle.GetComponentInChildren<Text>().text = file.Name;
+			GameObject toogleObject = Instantiate(togglePrefab);
+			toogleObject.transform.SetParent(verticalLayout.transform, false);
+			Toggle toggle = toogleObject.GetComponent<Toggle>();
+			toggle.GetComponentInChildren<Text>().text = fileNames[i];
 			toggles.Add(toggle);
 		}
 	}

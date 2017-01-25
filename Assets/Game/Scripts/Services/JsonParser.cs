@@ -20,12 +20,12 @@ public class JsonParser : IService
 	private const string NPCS_FILE = "npcs.json";
 
 	//JsonNodes
-	private JSONNode perksNode;
-	private JSONNode itemsNode;
-	private JSONNode recipesNode;
-	private JSONNode questsNode;
-	private JSONNode dialoguesNode;
-	private JSONNode NPCsNode;
+	public JSONNode perksNode;
+	public JSONNode itemsNode;
+	public JSONNode recipesNode;
+	public JSONNode questsNode;
+	public JSONNode dialoguesNode;
+	public JSONNode NPCsNode;
 	
 	/****************************************************************************************/
 	/*										NATIVE METHODS									*/
@@ -33,65 +33,20 @@ public class JsonParser : IService
 	
 	public void Init () 
 	{
-		LoadFromDisk(PERKS_FILE, "Perks", ref perksNode);
-		LoadFromDisk(ITEMS_FILE, "Items", ref itemsNode);
-		LoadFromDisk(RECIPES_FILE, "Recipes", ref recipesNode);
-		LoadFromDisk(QUESTS_FILE, "Quests", ref questsNode);
-		LoadFromDisk(DIALOGUES_FILE, "Dialogues", ref dialoguesNode);
-		LoadFromDisk(NPCS_FILE, "NPCs", ref NPCsNode);
+		LoadFromDisk(PERKS_FILE,  ref perksNode);
+		LoadFromDisk(ITEMS_FILE, ref itemsNode);
+		LoadFromDisk(RECIPES_FILE, ref recipesNode);
+		LoadFromDisk(QUESTS_FILE, ref questsNode);
+		LoadFromDisk(DIALOGUES_FILE, ref dialoguesNode);
+		LoadFromDisk(NPCS_FILE, ref NPCsNode);
 	}
 
-	public void LoadFromDisk(string fileName, string nodeName, ref JSONNode node)
+	private void LoadFromDisk(string fileName, ref JSONNode node)
 	{
 		using (StreamReader reader = new StreamReader(GetPath(fileName)))
 		{
-			node = JSON.Parse(reader.ReadToEnd())[nodeName];
+			node = JSON.Parse(reader.ReadToEnd());
 		}
-	}
-
-	public JSONNode GetItemData(string itemKey)
-	{
-		return itemsNode[itemKey];
-	}
-
-	public JSONNode GetNPCData(string itemKey)
-	{
-		return NPCsNode[itemKey];
-	}
-
-	public JSONNode GetDialogueData(string itemKey)
-	{
-		return dialoguesNode[itemKey];
-	}
-
-	public JSONNode GetQuestData(string itemKey)
-	{
-		return questsNode[itemKey];
-	}
-
-	public JSONNode GetRecipeData(string itemKey)
-	{
-		return recipesNode[itemKey];
-	}
-
-	public JSONNode GetPerksData(string itemKey)
-	{
-		return perksNode[itemKey];
-	}
-
-	public JSONNode GetDialogueNode()
-	{
-		return dialoguesNode;
-	}
-
-	public JSONNode GetPerksNode()
-	{
-		return questsNode;
-	}
-
-	public JSONNode GetQuestNode()
-	{
-		return questsNode;
 	}
 
 	public JSONNode GetRecipesNode()
@@ -101,7 +56,7 @@ public class JsonParser : IService
 
 	private string GetPath(string filename)
 	{
-		return Application.streamingAssetsPath + "/" + filename;
+		return Application.streamingAssetsPath + "/" + CassandraModBuilder.CASSANDRA_CORE_FOLDER + "/" + filename;
 	}
 	
 }

@@ -1,8 +1,5 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System;
 using System.Reflection;
-using System.IO;
 
 [Serializable]
 public class GameScript
@@ -11,6 +8,7 @@ public class GameScript
 	/*										VARIABLES									  	*/
 	/****************************************************************************************/
 
+	private const string METHOD_NAME = "Run";
 	public string sourceCode;
 	public string scriptName;
 	
@@ -45,11 +43,11 @@ public class GameScript
 		return fullSource;
 	}
 
-	public void Prepare()
+	public void Prepare(Assembly assembly)
 	{
-		Type instanceType = CassandraMod.compiledCode.GetType(scriptName);
+		Type instanceType = assembly.GetType(scriptName);
 		instance = Activator.CreateInstance(instanceType);
-		method = instanceType.GetMethod("Run");
+		method = instanceType.GetMethod(METHOD_NAME);
 	}
 
 	public object Run()

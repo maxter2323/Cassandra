@@ -29,7 +29,7 @@ public class NPCFactory : IService
 
 	public NPC BuildNPCScript(string NPCname)
 	{
-		JSONNode jsonItem = jsonParser.GetNPCData(NPCname);
+		JSONNode jsonItem = jsonParser.NPCsNode[NPCname];
 		NPC npc = new NPC();
 		npc.name = jsonItem["Name"];
 		npc.viewName = jsonItem["View"];

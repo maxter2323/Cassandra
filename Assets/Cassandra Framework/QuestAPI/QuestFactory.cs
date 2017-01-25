@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CassandraFramework.Quests
 {
-	public class QuestFactory : IService 
+	public class QuestFactory : IService, IFactory
 	{
 		/****************************************************************************************/
 		/*										VARIABLES									  	*/
@@ -24,14 +24,19 @@ namespace CassandraFramework.Quests
 		private const string JSON_QUEST_SCRIPT = "Script";
 		private const string JSON_QUEST_STAGES = "Stages";
 		private const string JSON_QUEST_GOTO = "Goto";
-		
+
 		/****************************************************************************************/
 		/*										 METHODS										*/
 		/****************************************************************************************/
 
-		public void Init () 
+		public void Init()
 		{
 			jsonParser = ServiceLocator.GetService<JsonParser>();
+		}
+
+		public void Add(object toAdd)
+		{
+			AddQuest(toAdd as Quest);
 		}
 
 		public void AddQuest(Quest q)
@@ -47,8 +52,20 @@ namespace CassandraFramework.Quests
 
 		public Quest MakeQuestFromJson(string questKey)
 		{
-			JSONNode jsonQuest = jsonParser.GetQuestData(questKey);
+			JSONNode jsonQuest = jsonParser.questsNode[questKey];
 			return MakeQuestFromJson(jsonQuest);
+		}
+
+		public List<IGameScriptable> MakeAll()
+		{
+			List<IGameScriptable> toreturn = new List<IGameScriptable>();
+			for (int i = 0; i < jsonParser.questsNode.Count; i++)
+			{
+				JSONNode jsonQuest = jsonParser.questsNode[i];
+				IGameScriptable s = MakeQuestFromJson(jsonQuest);
+				toreturn.Add(s);
+			}
+			return toreturn;
 		}
 
 		public Quest MakeQuestFromJson(JSONNode jsonQuest)

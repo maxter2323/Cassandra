@@ -24,10 +24,10 @@ namespace CassandraFramework.Items
 			jsonParser = ServiceLocator.GetService<JsonParser>();
 			dataLocator = ServiceLocator.GetService<DataLocator>(); 
 		}
-		
-		public Item BuildItemScript(string itemName) 
+
+		public Item BuildItemScript(string itemName)
 		{
-			JSONNode jsonItem = jsonParser.GetItemData(itemName);
+			JSONNode jsonItem = jsonParser.itemsNode[itemName];
 			string t = jsonItem["Category"];
 			Type itemType = Type.GetType("CassandraFramework.Items." + t); //TODO: Avoid "CassandraFramework.Items."
 			var objectWithoutType = Activator.CreateInstance(itemType);

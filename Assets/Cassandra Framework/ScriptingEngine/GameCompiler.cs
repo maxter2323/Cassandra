@@ -6,8 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.IO;
 
-public class GameCompiler
+public static class GameCompiler
 {
+	/****************************************************************************************/
+	/*										METHODS											*/
+	/****************************************************************************************/
 
 	public static Assembly Compile(string source, string path)
 	{
@@ -35,7 +38,6 @@ public class GameCompiler
 		return result.CompiledAssembly;
 	}
 
-	//error.ErrorText
 	public static string GetLine(string text, int lineNo)
 	{
 	  string[] lines = text.Replace("\r","").Split('\n');
@@ -45,7 +47,7 @@ public class GameCompiler
 	public static byte[] CompileAsBytes(string sourceCode)
 	{
 		string fileName = Application.streamingAssetsPath + "/CassandraGame.dll";
-		Assembly compiledCode = GameCompiler.Compile(sourceCode, fileName);
+		Assembly compiledCode = Compile(sourceCode, fileName);
 		byte[] bytes = File.ReadAllBytes(fileName);
 		File.Delete(fileName);
 		return bytes;

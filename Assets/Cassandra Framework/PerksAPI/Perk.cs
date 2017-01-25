@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using CassandraEvents;
 using System;
+using System.Reflection;
 
 namespace CassandraFramework.Perks
 {
 	[Serializable]
-	public class Perk
+	public class Perk : IGameScriptable
 	{
 		/****************************************************************************************/
 		/*										VARIABLES									  	*/
@@ -24,11 +25,15 @@ namespace CassandraFramework.Perks
 		public List<IEffect> effects = new List<IEffect>();
 
 		[NonSerialized] public PerkStringEvent OnTagChanged = new PerkStringEvent();
-		
+
 		/****************************************************************************************/
 		/*										METHODS											*/
 		/****************************************************************************************/
-
+		public IFactory GetFactory()
+		{
+			return (IFactory)ServiceLocator.GetService<PerkFactory>();
+		}
+		
 		public string Tag
 		{
 			get{return tag;}
@@ -41,13 +46,13 @@ namespace CassandraFramework.Perks
 			}
 		}
 
-		public void PrepareScripts()
+		public void PrepareScripts(Assembly assembly)
 		{
 			for (int i = 0; i < requirements.Count; i++)
 			{
 				if (requirements[i] is CustomRequirement)
 				{
-					((CustomRequirement)requirements[i]).script.Prepare();
+					((CustomRequirement)requirements[i]).script.Prepare(assembly);
 				}
 			}
 		}

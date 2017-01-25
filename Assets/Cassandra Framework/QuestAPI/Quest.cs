@@ -2,11 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace CassandraFramework.Quests
 {
 	[Serializable]
-	public class Quest 
+	public class Quest : IGameScriptable
 	{
 		/****************************************************************************************/
 		/*										VARIABLES									  	*/
@@ -34,7 +35,11 @@ namespace CassandraFramework.Quests
 		/****************************************************************************************/
 		/*											METHODS										*/
 		/****************************************************************************************/
-		
+		public IFactory GetFactory()
+		{
+			return (IFactory)ServiceLocator.GetService<QuestFactory>();
+		}
+
 		public void Start () 
 		{
 			StartStage(0);
@@ -62,12 +67,12 @@ namespace CassandraFramework.Quests
 			return toreturn;
 		}
 
-		public void PrepareScripts()
+		public void PrepareScripts(Assembly assembly)
 		{
 			List<GameScript> scripts = GetAllScripts();
 			for (int i = 0; i < scripts.Count; i++)
 			{
-				scripts[i].Prepare();
+				scripts[i].Prepare(assembly);
 			}
 		}
 	}

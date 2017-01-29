@@ -70,8 +70,7 @@ namespace CassandraFramework.Dialogues
 			List<DialogueOption> options = GetAllOptions();
 			for (int i = 0; i < options.Count; i++)
 			{
-				if(options[i].script != null) toreturn.Add(options[i].script);
-				if(options[i].condition != null) toreturn.Add(options[i].condition);
+				toreturn.AddRange(options[i].GetAllScripts());
 			}
 			return toreturn;
 		}
@@ -92,25 +91,16 @@ namespace CassandraFramework.Dialogues
 			List<DialogueOption> toreturn = new List<DialogueOption>();
 			for (int i = 0; i < options.Count; i++)
 			{
-				if(options[i].condition == null)
-				{	
+				if(options[i].NoRequirements())
+				{
 					toreturn.Add(options[i]);
 				}
 				else
 				{
-					if ((bool)(options[i].condition.Run())) toreturn.Add(options[i]);
+					if (options[i].Ready()) toreturn.Add(options[i]);
 				}
 			}
 			return toreturn;
-		}
-
-		public void PrepareScripts(Assembly assembly)
-		{
-			List<GameScript> scripts = GetAllScripts();
-			for (int i = 0; i < scripts.Count; i++)
-			{
-				scripts[i].Prepare(assembly);
-			}
 		}
 	}
 }

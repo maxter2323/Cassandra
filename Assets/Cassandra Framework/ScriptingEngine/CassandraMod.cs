@@ -23,7 +23,11 @@ public class CassandraMod
 		for (int i = 0; i < allObjects.Count; i++)
 		{
 			IGameScriptable s = allObjects[i];
-			s.PrepareScripts(compiledCode);
+			List<GameScript> scripts = s.GetAllScripts();
+			for (int j = 0; j < scripts.Count; j++)
+			{
+				scripts[j].Prepare(compiledCode);
+			}
 			IFactory f = s.GetFactory();
 			f.Add(s);
 		}

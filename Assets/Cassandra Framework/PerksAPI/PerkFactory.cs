@@ -76,7 +76,7 @@ namespace CassandraFramework.Perks
 				perk.tag = jsonPerk[JSON_PERK_TAG];
 				perk.tagName = jsonPerk[JSON_PERK_TAGNAME];
 				perk.description = jsonPerk[JSON_PERK_DESCRIPTION];
-				perk.requirements = requirementFactory.MakeRequirementsFromJson(jsonPerk, perk.key);
+				perk.requirements.Set(requirementFactory.JSON_To_Requirements(jsonPerk, perk.key));
 				return perk;
 			}
 

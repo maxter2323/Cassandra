@@ -1,9 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using CassandraEvents;
-using System;
-using System.Reflection;
 
 namespace CassandraFramework.Perks
 {
@@ -21,7 +18,7 @@ namespace CassandraFramework.Perks
 		public string tagName;
 
 		public Character owner;
-		public List<IRequirement> requirements = new List<IRequirement>();
+		public Requirements requirements = new Requirements();
 		public List<IEffect> effects = new List<IEffect>();
 
 		[NonSerialized] public PerkStringEvent OnTagChanged = new PerkStringEvent();
@@ -46,27 +43,10 @@ namespace CassandraFramework.Perks
 			}
 		}
 
-		public void PrepareScripts(Assembly assembly)
-		{
-			for (int i = 0; i < requirements.Count; i++)
-			{
-				if (requirements[i] is CustomRequirement)
-				{
-					((CustomRequirement)requirements[i]).script.Prepare(assembly);
-				}
-			}
-		}
-
 		public List<GameScript> GetAllScripts()
 		{
 			List<GameScript> toreturn = new List<GameScript>();
-			for (int i = 0; i < requirements.Count; i++)
-			{
-				if (requirements[i] is CustomRequirement)
-				{
-					toreturn.Add(((CustomRequirement)requirements[i]).script);
-				}
-			}
+			toreturn.AddRange(requirements.GetAllScripts());
 			for (int i = 0; i < effects.Count; i++)
 			{
 				if (effects[i] is CustomEffect)
@@ -79,29 +59,12 @@ namespace CassandraFramework.Perks
 
 		public void SetOwners()
 		{
-			for (int i = 0; i < requirements.Count; i++)
-			{
-				if (requirements[i].CheckRequirement() == false)
-				{
-					//return false;
-				} 
-			}
-			for (int i = 0; i < effects.Count; i++)
-			{
-				
-			}
+			
 		}
 
 		public bool Ready()
 		{
-			for (int i = 0; i < requirements.Count; i++)
-			{
-				if (requirements[i].CheckRequirement() == false)
-				{
-					return false;
-				} 
-			}
-			return true;
+			return requirements.Ready();
 		}
 
 		public void ApplyEffects()

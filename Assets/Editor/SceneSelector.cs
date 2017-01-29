@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEditor.SceneManagement;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 
 public class SceneSelector : EditorWindow
@@ -14,8 +13,7 @@ public class SceneSelector : EditorWindow
 	//Files
     private List<string> fileList = new List<string>();
 	private const string FILE_FORMAT = "*.unity";
-	private bool startExecuted = false;
-
+	private bool started = false;
 	//GUI
 	private Vector2 scrollPos;
 	private int widthAmount = 5;
@@ -23,7 +21,7 @@ public class SceneSelector : EditorWindow
 	private int tileHeight = 50;
 
 	/****************************************************************************************/
-	/*										NATIVE METHODS									*/
+	/*										 METHODS										*/
 	/****************************************************************************************/
 
     [MenuItem("Window/SceneSelector")]
@@ -34,10 +32,12 @@ public class SceneSelector : EditorWindow
 
     private void Start()
     {
-		if (startExecuted) return;
-		fileList.Clear();
-		RecursiveFileSearch(Application.dataPath);
-		startExecuted = true;
+		if (!started)
+		{
+			fileList.Clear();
+			RecursiveFileSearch(Application.dataPath);
+			started = true;
+		}
     }
 
 	private void RecursiveFileSearch(string startDir) 

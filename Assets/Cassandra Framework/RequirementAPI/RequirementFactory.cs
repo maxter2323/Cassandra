@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using SimpleJSON;
+﻿using SimpleJSON;
 using System.Collections.Generic;
 
 public class RequirementFactory : IService 
@@ -9,21 +7,25 @@ public class RequirementFactory : IService
 	/*										VARIABLES									  	*/
 	/****************************************************************************************/
 
+	//CassandraRequirement
 	private const string JSON_REQUIREMENT_TYPE = "Type";
 	private const string JSON_REQUIREMENT_KEY = "Key";
 	private const string JSON_REQUIREMENT_ARGUMENT = "Arg";
 	private const string JSON_REQUIREMENT_VALUE = "Value";
 
+	//CustomRequirement
 	private const string JSON_REQUIREMENT_NAME = "Name";
 	private const string JSON_REQUIREMENT_DESCRIPTION = "Description";
 	private const string JSON_REQUIREMENT_SCRIPT = "Script";
+	private const string JSON_REQUIREMENT_SCRIPT2 = "RequirementScript";
 
+	//Category keys
 	private const string JSON_REQUIREMENT_REQUIREMENTS = "Requirements";
 	private const string JSON_REQUIREMENT_CASSANDRAREQUIREMENTS = "CassandraRequirements";
 	private const string JSON_REQUIREMENT_CUSTOMREQUIREMENTS = "CustomRequirements";
 
 	/****************************************************************************************/
-	/*										NATIVE METHODS									*/
+	/*										METHODS											*/
 	/****************************************************************************************/
 	
 	public void Init () 
@@ -31,49 +33,49 @@ public class RequirementFactory : IService
 		//
 	}
 
-	public List<IRequirement> MakeRequirementsFromJson(JSONNode jsonData, string id)
+	public List<IRequirement> JSON_To_Requirements(JSONNode jsonData, string id)
 	{
 		List<IRequirement> toReturn = new List<IRequirement>();
-		if (jsonData[JSON_REQUIREMENT_REQUIREMENTS] != null &&
-			jsonData[JSON_REQUIREMENT_REQUIREMENTS][JSON_REQUIREMENT_CASSANDRAREQUIREMENTS] != null
-		)
+		JSONNode requirements = jsonData[JSON_REQUIREMENT_REQUIREMENTS];
+		if (requirements != null)
 		{
-			JSONNode cassRequirements = jsonData[JSON_REQUIREMENT_REQUIREMENTS][JSON_REQUIREMENT_CASSANDRAREQUIREMENTS];
-			for (int i = 0; i < cassRequirements.Count; i++)
+			JSONNode cassRequirements = requirements[JSON_REQUIREMENT_CASSANDRAREQUIREMENTS];
+			if (cassRequirements != null)
 			{
-				toReturn.Add(MakeRequirementFromJson(cassRequirements[i]));
+				for (int i = 0; i < cassRequirements.Count; i++)
+				{
+					toReturn.Add(JSON_To_Requirement(cassRequirements[i]));
+				}
 			}
-		}
-		if (jsonData[JSON_REQUIREMENT_REQUIREMENTS] != null &&
-			jsonData[JSON_REQUIREMENT_REQUIREMENTS][JSON_REQUIREMENT_CUSTOMREQUIREMENTS] != null
-		)
-		{
-			JSONNode customRequirements = jsonData[JSON_REQUIREMENT_REQUIREMENTS][JSON_REQUIREMENT_CUSTOMREQUIREMENTS];
-			for (int i = 0; i < customRequirements.Count; i++)
+			JSONNode customRequirements = requirements[JSON_REQUIREMENT_CUSTOMREQUIREMENTS];
+			if (customRequirements != null)
 			{
-				toReturn.Add(MakeCustomRequirementFromJson(customRequirements[i], id, i));
+				for (int i = 0; i < customRequirements.Count; i++)
+				{
+					toReturn.Add(JSON_To_CustomRequirement(customRequirements[i], id, i));
+				}
 			}
 		}
 		return toReturn;
 	}
 
-	public IRequirement MakeRequirementFromJson(JSONNode jsonRequirement)
+	public IRequirement JSON_To_Requirement(JSONNode json)
 	{
 		Requirement requirement = new Requirement();
-		requirement.type = jsonRequirement[JSON_REQUIREMENT_TYPE];
-		requirement.key = jsonRequirement[JSON_REQUIREMENT_KEY];
-		requirement.argument = jsonRequirement[JSON_REQUIREMENT_ARGUMENT];
-		requirement.value = jsonRequirement[JSON_REQUIREMENT_VALUE].AsInt;
-		return (IRequirement)requirement;
+		requirement.type = json[JSON_REQUIREMENT_TYPE];
+		requirement.key = json[JSON_REQUIREMENT_KEY];
+		requirement.argument = json[JSON_REQUIREMENT_ARGUMENT];
+		requirement.value = json[JSON_REQUIREMENT_VALUE].AsInt;
+		return requirement;
 	}
 
-	public IRequirement MakeCustomRequirementFromJson(JSONNode jsonRequirement, string id, int index)
+	public IRequirement JSON_To_CustomRequirement(JSONNode json, string id, int index)
 	{
 		CustomRequirement requirement = new CustomRequirement();
-		requirement.name = jsonRequirement[JSON_REQUIREMENT_NAME];
-		requirement.description = jsonRequirement[JSON_REQUIREMENT_DESCRIPTION];
-		requirement.script = new GameScript(jsonRequirement[JSON_REQUIREMENT_SCRIPT]);
-		requirement.script.scriptName = id + "_" + JSON_REQUIREMENT_SCRIPT + "_" + index.ToString();
-		return (IRequirement)requirement;
+		if (json[JSON_REQUIREMENT_NAME] != null) requirement.name = json[JSON_REQUIREMENT_NAME];
+		if (json[JSON_REQUIREMENT_DESCRIPTION] != null) requirement.description = json[JSON_REQUIREMENT_DESCRIPTION];
+		requirement.script = new GameScript(json[JSON_REQUIREMENT_SCRIPT]);
+		requirement.script.scriptName = id + "_" + JSON_REQUIREMENT_SCRIPT2 + "_" + index.ToString();
+		return requirement;
 	}
 }

@@ -6,6 +6,5 @@ using UnityEngine;
 public interface IGameScriptable
 {
 	IFactory GetFactory();
-	void PrepareScripts(Assembly assembly);
 	List<GameScript> GetAllScripts();
 }

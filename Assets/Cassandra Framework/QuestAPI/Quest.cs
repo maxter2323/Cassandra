@@ -67,13 +67,5 @@ namespace CassandraFramework.Quests
 			return toreturn;
 		}
 
-		public void PrepareScripts(Assembly assembly)
-		{
-			List<GameScript> scripts = GetAllScripts();
-			for (int i = 0; i < scripts.Count; i++)
-			{
-				scripts[i].Prepare(assembly);
-			}
-		}
 	}
 }

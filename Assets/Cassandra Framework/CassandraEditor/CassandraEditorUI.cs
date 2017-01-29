@@ -1,28 +1,26 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-[Serializable]
-public class CustomRequirement : IRequirement
+public class CassandraEditorUI : MonoBehaviour 
 {
 	/****************************************************************************************/
 	/*										VARIABLES									  	*/
 	/****************************************************************************************/
 
-	public string name;
-	public string key;
-	public string description;
-	public GameScript script;
+	private JsonParser jsonparser;
 
 	/****************************************************************************************/
-	/*										VARIABLES									  	*/
+	/*										METHODS											*/
 	/****************************************************************************************/
 
-	public bool CheckRequirement()
+	private void Start () 
 	{
-		return (bool)script.Run();
+		jsonparser = ServiceLocator.GetService<JsonParser>();
 	}
 
-	public string DescriptionString()
+	private void Update () 
 	{
-		return description;
+		
 	}
 }

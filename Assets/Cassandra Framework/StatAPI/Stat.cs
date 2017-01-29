@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-using System.Collections;
-using CassandraEvents;
+﻿using CassandraEvents;
 
 namespace CassandraFramework.Stats
 {
@@ -46,11 +43,6 @@ namespace CassandraFramework.Stats
 			Value = maxV;
 		}
 
-		public Stat(string k, int cV, int minV, int maxV, string t):this(k, cV, minV, maxV)
-		{
-			tag = t;
-		}
-
 		public Stat(string k, string n, int cV, int minV, int maxV)
 		{
 			key = k;
@@ -58,6 +50,11 @@ namespace CassandraFramework.Stats
 			minValue = cV;
 			maxValue = minV;
 			Value = maxV;
+		}
+
+		public Stat(string k, int cV, int minV, int maxV, string t):this(k, cV, minV, maxV)
+		{
+			tag = t;
 		}
 
 		public Stat(string k, string n, int cV, int minV, int maxV, string t):this( n, k, cV, minV, maxV)
@@ -71,7 +68,7 @@ namespace CassandraFramework.Stats
 		}
 
 		/****************************************************************************************/
-		/*										METHODS											*/
+		/*										GET/SET											*/
 		/****************************************************************************************/
 
 		public string Name
@@ -111,6 +108,20 @@ namespace CassandraFramework.Stats
 				tag = value;
 				if (OnTagChanged != null) OnTagChanged.Invoke(this, oldTag);
 			}
+		}
+
+		/****************************************************************************************/
+		/*										VALUE MODIFIERS									*/
+		/****************************************************************************************/
+
+		public void Increase(int val)
+		{
+			Value = Value + val;
+		}
+
+		public void Decrease(int val)
+		{
+			Value = Value - val;
 		}
 
 		public void SetToMax()

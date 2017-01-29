@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using UnityEngine;
 using CassandraFramework.Stats;
-using CassandraFramework.Items;
 
 [Serializable]
 public class Requirement : IRequirement
@@ -10,34 +7,38 @@ public class Requirement : IRequirement
 	/****************************************************************************************/
 	/*										VARIABLES									  	*/
 	/****************************************************************************************/
-	
+
+	//Core
 	public string type;
 	public string key;
 	public string argument;
 	public int value;
 	public Character owner;
 
+	//Strings
+	private const string REQUIREMENT_STAT = "Stat";
+	private const string REQUIREMENT_ITEM = "Item";
+	private const string REQUIREMENT_STAT_EQUAL = "Equals";
+	private const string REQUIREMENT_STAT_MORE = "More";
+	private const string REQUIREMENT_STAT_LESS = "Less";
+
 	/****************************************************************************************/
 	/*										NATIVE METHODS									*/
 	/****************************************************************************************/
 
-	public string Key()
-	{
-		return key;
-	}
-
 	public bool CheckRequirement()
 	{
+		bool answer = false;
 		switch (type)
 		{
-			case "Stat":
-				return CheckStatRequirement();
+			case REQUIREMENT_STAT:
+				answer = CheckStatRequirement();
 				break;
-			case "Item":
-				return CheckItemRequirement();
+			case REQUIREMENT_ITEM:
+				answer = CheckItemRequirement();
 				break;
 		}
-		return false;
+		return answer;
 	}
 
 	private bool CheckStatRequirement()
@@ -46,13 +47,13 @@ public class Requirement : IRequirement
 		Stat s = owner.stats.GetStat(key);
 		switch (argument)
 		{
-			case "Equal":
+			case REQUIREMENT_STAT_EQUAL:
 				answer = (value == s.Value);
 				break;
-			case "More":
+			case REQUIREMENT_STAT_MORE:
 				answer = (value < s.Value);
 				break;
-			case "Less":
+			case REQUIREMENT_STAT_LESS:
 				answer = (value > s.Value);
 				break;
 		}
@@ -61,7 +62,6 @@ public class Requirement : IRequirement
 
 	private bool CheckItemRequirement()
 	{
-		bool answer;
 		if (owner.inventory.HasItem(key))
 		{
 			if (owner.inventory.GetItemCount(key) == value)
@@ -74,15 +74,16 @@ public class Requirement : IRequirement
 
 	public string DescriptionString()
 	{
+		string toReturn = "None";
 		switch (type)
 		{
-			case "Stat":
-				return String.Format("{0} {1} {2}", owner.stats.GetStat(key).Name, argument, value);
+			case REQUIREMENT_STAT:
+				toReturn = String.Format("{0} {1} {2}", owner.stats.GetStat(key).Name, argument, value);
 				break;
-			case "Item":
-				return key + " (" + value + ")";
+			case REQUIREMENT_ITEM:
+				toReturn = key + " (" + value + ")";
 				break;
 		}
-		return "None";
+		return toReturn;
 	}
 }

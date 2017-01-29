@@ -1,19 +1,27 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 
 namespace CassandraFramework.Quests
 {
 	[Serializable]
-	public class QuestStage 
+	public class QuestStage
 	{
 		/****************************************************************************************/
 		/*										VARIABLES									  	*/
 		/****************************************************************************************/
+
+		public Quest parent;
 		public int index;
 		public int gotoIndex;
 		public string log;
 		public GameScript script;
+
+		/****************************************************************************************/
+		/*										METHODS									  		*/
+		/****************************************************************************************/
+
+		public void Start()
+		{
+			script.Run();
+		}
 	}
 }

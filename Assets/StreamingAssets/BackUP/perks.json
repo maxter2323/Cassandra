@@ -31,37 +31,5 @@
             }
         ]
     }
-},
-"Template": 
-{
-    "Key": "Template",
-    "Name": "Template",
-    "Tag": "Skills",
-    "TagName": "Skills",
-    "Description": "Casts fireballs",
-    "Requirements":{
-        "CassandraRequirements":[
-            {"Type":"Stat", "Key":"Level", "Arg": "Equal", "Value": 10}
-        ],
-        "CustomRequirements":[
-            {
-                "Name":"Custom Requirement", 
-                "Description":"Require Area cleaned", 
-                "Script": "return true;"
-            }
-        ]
-    },
-    "Effects":{
-        "CassandraEffects":[
-            {"Type":"Stat", "Key":"Health", "Arg": "Set", "Value": 100}
-        ],
-        "CustomEffects":[
-        {
-                "Name":"MyAwesomeEffect", 
-                "Description":"Does awesome things", 
-                "Script": "CastFireballs();"
-            }
-        ]
-    }
 }
 }

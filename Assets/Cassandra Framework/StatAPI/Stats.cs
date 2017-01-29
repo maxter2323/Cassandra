@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace CassandraFramework.Stats
 {
@@ -61,13 +59,13 @@ namespace CassandraFramework.Stats
 		public void IncreaseStat(string key, int val)
 		{
 			Stat stat = GetStat(key);
-			if (stat != null) stat.Value = stat.Value + val;
+			if (stat != null) stat.Increase(val);
 		}
 
 		public void DecreaseStat(string key, int val)
 		{
 			Stat stat = GetStat(key);
-			if (stat != null) stat.Value = stat.Value - val;
+			if (stat != null) stat.Decrease(val);
 		}
 
 		/****************************************************************************************/

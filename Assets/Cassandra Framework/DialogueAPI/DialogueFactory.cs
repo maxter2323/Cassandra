@@ -14,6 +14,7 @@ namespace CassandraFramework.Dialogues
 
 		//Core
 		private JsonParser jsonParser;
+		private RequirementFactory requirementFactory;
 		private Dictionary<string, Dialogue> dialogues = new Dictionary<string, Dialogue>();
 
 		//Strings
@@ -25,7 +26,7 @@ namespace CassandraFramework.Dialogues
 		private const string JSON_DIALOGUE_GOTO = "Goto";
 		private const string JSON_DIALOGUE_REPLY = "Reply";
 		private const string JSON_DIALOGUE_SCRIPT = "Script";
-		private const string JSON_DIALOGUE_CONDITION = "Condition";
+		private const string JSON_DIALOGUE_REQUIREMENTS = "Requirements";
 		
 		/****************************************************************************************/
 		/*										METHODS											*/
@@ -34,6 +35,7 @@ namespace CassandraFramework.Dialogues
 		public void Init () 
 		{
 			jsonParser = ServiceLocator.GetService<JsonParser>();
+			requirementFactory = ServiceLocator.GetService<RequirementFactory>();
 		}
 
 		public void Add(object toAdd)
@@ -106,11 +108,7 @@ namespace CassandraFramework.Dialogues
 				newOption.script =  new GameScript(jsonNode[JSON_DIALOGUE_SCRIPT]);
 				newOption.script.scriptName = dialogue.key + "_" + JSON_DIALOGUE_SCRIPT + "_" + index.ToString();
 			}
-			if (jsonNode[JSON_DIALOGUE_CONDITION] != null)
-			{
-				newOption.condition = new GameScript(jsonNode[JSON_DIALOGUE_CONDITION]);
-				newOption.condition.scriptName = dialogue.key + "_" + JSON_DIALOGUE_CONDITION + "_" +  index.ToString();
-			} 
+			newOption.requirements.Set(requirementFactory.JSON_To_Requirements(jsonNode, dialogue.key + index.ToString()));
 			return newOption;
 		}
 	}

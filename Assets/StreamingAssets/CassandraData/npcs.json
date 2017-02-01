@@ -13,17 +13,4 @@
             {"name":"Water", "amount":"5"}
         ]
     },
-    "Crawler": 
-    {
-        "Name": "Crawler",
-        "View": "Crawler",
-        "Unique": false,
-        "DefaultStatValue": 30,
-        "Stats":[
-
-        ],
-        "Inventory":[
-            {"name":"Water", "amount":"1"}
-        ]
-    }
 }

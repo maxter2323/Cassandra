@@ -35,22 +35,9 @@ public class DialogueUI : UIElement
 		OnBecameInVisible.AddListener(Clear);
 	}
 
-	public void StartD()
-	{
-		Init();
-		CassandraModBuilder modBuilder =  ServiceLocator.GetService<CassandraModBuilder>();
-		modBuilder.BuildAll();
-		modBuilder.LoadMod("Game.cass");
-		DialogueFactory dialogueService = ServiceLocator.GetService<DialogueFactory>();
-		dialogue = dialogueService.GetDialogue("Ethan_Dialogue");
-		SetReplyText(dialogue.greetings);
-		SetVisible(true);
-	}
-
 	public void InitDialogueTiled(GameObject npc)
 	{
 		dialogue = ((NPC)npc.GetComponent<CharacterMono>().character).dialogue;
-		Debug.Log(dialogue);
 		SetReplyText(dialogue.greetings);
 		ShowButtons();
 	}
@@ -84,7 +71,7 @@ public class DialogueUI : UIElement
 		{
 			Player.instance.updatePlayer = true;
 			UIManager uiService = ServiceLocator.GetService<UIManager>();
-			uiService.MakeUI(N.UI.Tiled.PLAYER_UI);
+			uiService.MakeUI(N.UI.PLAYER_UI);
 			uiService.DeleteUI(N.UI.DIALOGUE_UI);
 			return;
 		}

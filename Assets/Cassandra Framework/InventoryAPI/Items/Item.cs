@@ -23,6 +23,7 @@ namespace CassandraFramework.Items
 		public ItemType type;
 		public string itemTypeString;
 		public string iconName;
+		public Inventory currentContainer;
 
 		public string GetName()
 		{

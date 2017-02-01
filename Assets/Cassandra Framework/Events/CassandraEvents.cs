@@ -25,4 +25,7 @@ namespace CassandraEvents
 	//Perk
 	public class PerkEvent : UnityEvent<Perk> {}
 	public class PerkStringEvent : UnityEvent<Perk, string> {}
+
+	//Effects
+	public class EffectEvent : UnityEvent<Effect> {};
 }

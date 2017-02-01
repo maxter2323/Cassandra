@@ -76,7 +76,6 @@ public class WorldBuilder : IService
 		loadingProgress = 1.0f;
 		currentSceneObject = GameObject.Find(sceneObjectHolder);
 		currentSceneObject.SetActive(false);
-		Debug.Log("Disabled Scene");
 		currentScene = currentSceneObject.GetComponent<WorldScene>();
 		LevelLoaded.Invoke();
 	}
@@ -150,9 +149,9 @@ public class WorldBuilder : IService
 	/****************************************************************************************/
 
 	private int[,] world = new int[,] { 
-		{ 1, 1, 3, 1, 3, 1, 1, 1}, 
 		{ 1, 1, 1, 1, 1, 1, 1, 1}, 
-		{ 1, 1, 1, 3, 1, 1, 1, 1}, 
+		{ 1, 1, 1, 1, 1, 1, 1, 1}, 
+		{ 1, 1, 1, 1, 1, 1, 1, 1}, 
 		{ 1, 1, 1, 1, 1, 1, 1, 1}, 
 		{ 1, 1, 1, 1, 1, 1, 1, 1}, 
 		{ 1, 1, 1, 1, 1, 1, 1, 1}, 
@@ -193,13 +192,16 @@ public class WorldBuilder : IService
 	private Tile InstantiateTile(int type, Vector3 pos)
 	{
 		GameObject prefab = null;
-		prefab =  ServiceLocator.GetService<DataLocator>().LoadResource("GrassTile");
+		prefab =  ServiceLocator.GetService<DataLocator>().LoadResource("Tile");
 		GameObject newObj = (GameObject)GameObject.Instantiate(prefab, pos, Quaternion.identity);
+		newObj.transform.SetParent(currentScene.GetStaticTransform());
 		NPCFactory npcFactory = ServiceLocator.GetService<NPCFactory>();
 		switch (type)
 		{
 			case 2:
-				npcFactory.BuildAndInstantiateNPC("Ethan").transform.position = pos;
+				GameObject ethan = npcFactory.BuildAndInstantiateNPC("Ethan");
+				ethan.transform.position = pos;
+				ethan.transform.root.eulerAngles = new Vector3(0, -90, 0);
 			break;
 			case 3:
 				npcFactory.BuildAndInstantiateNPC("Crawler").transform.position = pos;

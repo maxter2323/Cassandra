@@ -23,6 +23,16 @@ public class Slot
 
 	}
 
+	public void SetItem(Item newItem)
+	{
+		currentItem = newItem;
+	}
+
+	public Item GetItem()
+	{
+		return currentItem;
+	}
+
 	public Slot(string nname, Type t)
 	{
 		name = nname;

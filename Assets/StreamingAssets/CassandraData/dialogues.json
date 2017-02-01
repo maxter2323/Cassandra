@@ -17,7 +17,7 @@
                 "1":
                 { 
                     "Text": "Someone said you have a job...",
-                    "Reply": "Yes, I do have one. Please find a jerry and convert it to water bottles using the campfire. \n Talk to me when you are done. (Gives you a pistol)",
+                    "Reply": "Yes, I do have one. Please find a jerrycan and convert it to water bottles using the campfire. \n Talk to me when you are done. (Gives you a pistol)",
                     "Goto": 0,
                     "Requirements":{
                         "CustomRequirements":[
@@ -28,15 +28,15 @@
                 },
                 "2":
                 {
-                    "Text": "I have your Jerry",
+                    "Text": "I have your jerrycan",
                     "Reply": "Awesome you are done with you quest",
                     "Goto": 0,
                     "Requirements":{
                         "CustomRequirements":[
-                            {"Script": "return (Player.instance.inventory.HasItem(\"Jerry\") && Player.instance.quests.QuestStarted(\"Tutorial\"));"}
+                            {"Script": "return (Player.instance.inventory.HasItem(\"Jerrycan\") && Player.instance.quests.QuestStarted(\"Tutorial\"));"}
                         ]},
                     "Script": "
-                        Player.instance.inventory.RemoveItem(\"Jerry\");
+                        Player.instance.inventory.RemoveItem(\"Jerrycan\");
                         Player.instance.quests.EndQuest(\"Tutorial\");
                     ",
                 },

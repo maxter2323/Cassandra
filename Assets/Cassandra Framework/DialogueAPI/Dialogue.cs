@@ -1,12 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using System.Reflection;
 
 namespace CassandraFramework.Dialogues
 {
-
 	[Serializable]
 	public class Dialogue : IGameScriptable
 	{
@@ -18,20 +14,64 @@ namespace CassandraFramework.Dialogues
 		public string name;
 		public string greetings;
 		public int currentNode = 0;
-
 		public List<DialogueNode> nodes = new List<DialogueNode>();
 		
 		/****************************************************************************************/
-		/*										NATIVE METHODS									*/
+		/*										GENERAL METHODS									*/
 		/****************************************************************************************/
+
 		public IFactory GetFactory()
 		{
 			return (IFactory)ServiceLocator.GetService<DialogueFactory>();
 		}
 
+		public List<GameScript> GetAllScripts()
+		{
+			List<GameScript> toreturn = new List<GameScript>();
+			List<DialogueOption> options = GetAllOptions();
+			for (int i = 0; i < options.Count; i++)
+			{
+				toreturn.AddRange(options[i].GetAllScripts());
+			}
+			return toreturn;
+		}
+
+		/****************************************************************************************/
+		/*										NODES METHODS									*/
+		/****************************************************************************************/
+
 		public List<DialogueNode> GetNodes()
 		{
 			return nodes;
+		}
+
+		public void AddNode(DialogueNode n)
+		{
+			nodes.Add(n);
+		}
+
+		public void RemoveNode(int index)
+		{
+			nodes.RemoveAt(index);
+		}
+
+		/****************************************************************************************/
+		/*										OPTIONS METHODS									*/
+		/****************************************************************************************/
+
+		public void RemoveOptionFromNode(int nodeIndex, int optionIndex)
+		{
+			nodes[nodeIndex].RemoveOption(optionIndex);
+		}
+
+		public void SelectOption(DialogueOption option)
+		{
+			if (option.script != null)
+			{
+				option.script.Run();
+			}
+			currentNode = option.gotoIndex;
+			if (currentNode == -1) currentNode = 0;
 		}
 
 		public List<DialogueOption> GetOptionsForNode(int index)
@@ -47,42 +87,6 @@ namespace CassandraFramework.Dialogues
 				l.AddRange(GetOptionsForNode(i));
 			}
 			return l;
-		}
-
-		public void RemoveNode(int index)
-		{
-			nodes.RemoveAt(index);
-		}
-
-		public void RemoveOptionFromNode(int indexNode, int indexOption)
-		{
-			nodes[indexNode].RemoveOption(indexOption);
-		}
-
-		public void AddNode(DialogueNode n)
-		{
-			nodes.Add(n);
-		}
-
-		public List<GameScript> GetAllScripts()
-		{
-			List<GameScript> toreturn = new List<GameScript>();
-			List<DialogueOption> options = GetAllOptions();
-			for (int i = 0; i < options.Count; i++)
-			{
-				toreturn.AddRange(options[i].GetAllScripts());
-			}
-			return toreturn;
-		}
-
-		public void SelectOption(DialogueOption option)
-		{
-			if (option.script != null)
-			{
-				option.script.Run();
-			}
-			currentNode = option.gotoIndex;
-			if (currentNode == -1) currentNode = 0;
 		}
 
 		public List<DialogueOption> GetOptionsReady()

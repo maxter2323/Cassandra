@@ -14,6 +14,7 @@ namespace CassandraFramework.Perks
 			//Core
 			private JsonParser jsonParser;
 			private RequirementFactory requirementFactory;
+			private EffectFactory effectFactory;
 			private Dictionary<string, Perk> perks = new Dictionary<string, Perk>();
 
 			//Strings
@@ -23,6 +24,7 @@ namespace CassandraFramework.Perks
 			private const string JSON_PERK_TAGNAME = "TagName";
 			private const string JSON_PERK_DESCRIPTION = "Description";
 			private const string JSON_PERK_REQUIREMENTS = "Requirements";
+			private const string JSON_PERK_EFFECTS = "Effects";
 
 			/****************************************************************************************/
 			/*										METHODS											*/
@@ -32,6 +34,7 @@ namespace CassandraFramework.Perks
 			{
 				jsonParser = ServiceLocator.GetService<JsonParser>();
 				requirementFactory = ServiceLocator.GetService<RequirementFactory>();
+				effectFactory = ServiceLocator.GetService<EffectFactory>();
 			}
 			
 			public List<IGameScriptable> MakeAll()
@@ -77,6 +80,7 @@ namespace CassandraFramework.Perks
 				perk.tagName = jsonPerk[JSON_PERK_TAGNAME];
 				perk.description = jsonPerk[JSON_PERK_DESCRIPTION];
 				perk.requirements.Set(requirementFactory.JSON_To_Requirements(jsonPerk, perk.key));
+				perk.effects.Set(effectFactory.JSON_To_Effects(jsonPerk, perk.key));
 				return perk;
 			}
 

@@ -11,16 +11,13 @@ public class CraftUI : UIElement
 	/*										VARIABLES									  	*/
 	/****************************************************************************************/
 
+	//UI
 	[SerializeField] private GameObject buttonPanel;
 	[SerializeField] private Text recipeText;
 	[SerializeField] private Button craftButton;
 
-	private const string basicButtonName = "BasicButton";
-	private const string contextMenuName = "ContextMenu";
-	private GameObject buttonPrefab;
-	private GameObject contextMenuPrefab;
-	private GameObject contextMenu;
-
+	//Buttons
+	private GameObject buttonWithImagePrefab;
 	private List<GameObject> craftButtons;
 	private Dictionary<GameObject, int> buttonsIndexes;
 	public string workbenchtype;
@@ -33,12 +30,10 @@ public class CraftUI : UIElement
 	
 	public override void Init () 
 	{
-		buttonPrefab = ServiceLocator.GetService<DataLocator>().LoadResource(basicButtonName);
-		contextMenuPrefab = ServiceLocator.GetService<DataLocator>().LoadResource(contextMenuName);
+		buttonWithImagePrefab = ServiceLocator.GetService<DataLocator>().LoadResource("DialogueButton");
 		craftButtons = new List<GameObject>();
 		buttonsIndexes = new Dictionary<GameObject, int>();
 		OnBecameInVisible.AddListener(Clear);
-		SetVisible(false);
 	}
 	
 	private void Update () 
@@ -54,15 +49,21 @@ public class CraftUI : UIElement
 	public void ShowButtons()
 	{
 	    Clear();
-		recipes = ServiceLocator.GetService<CraftService>().GetRecipesForWorkBench(workbenchtype);
+		recipes = ServiceLocator.GetService<RecipeFactory>().GetRecipesForWorkBench(workbenchtype);
 		for (int i = 0; i < recipes.Count; i++)
 		{
-			GameObject newButton = GameObject.Instantiate(buttonPrefab);
-			ClickDetector detector = newButton.GetComponent<ClickDetector>();
-			detector.LeftClick += SelectCraftRecipe;
+			GameObject newButton = GameObject.Instantiate(buttonWithImagePrefab);
+			newButton.transform.SetParent(buttonPanel.transform, false);
 			craftButtons.Add(newButton);
 			buttonsIndexes[newButton] = i;
+			//Text textScript = newButton.GetComponentInChildren<Text>();
+			//textScript.text = itemList[i].itemList[0].name;
+			//if (itemList[i].Count() > 1) textScript.text += "(" + itemList[i].Count() + ")";
+			//Image itemImage = newButton.transform.FindChild("Image").GetComponent<Image>();
+			//itemImage.sprite = dataLocator.LoadSprite(itemList[i].itemList[0].iconName);
 			newButton.transform.SetParent(buttonPanel.transform);
+			ClickDetector detector = newButton.GetComponent<ClickDetector>();
+			detector.LeftClick += SelectCraftRecipe;
 			Text textScript = newButton.GetComponentInChildren<Text>();
 			textScript.text = recipes[i].name;
 		}
@@ -80,8 +81,9 @@ public class CraftUI : UIElement
 	{
 		if (Input.GetKey(KeyCode.Escape))
 		{
-			SetVisible(false);
-			//Player.instance.updatePlayer = true;
+			Player.instance.updatePlayer = true;
+			ServiceLocator.GetService<UIManager>().MakeUI(N.UI.PLAYER_UI);
+			ServiceLocator.GetService<UIManager>().DeleteUI(N.UI.CRAFT_UI);
 			return;
 		}
 	}
@@ -130,12 +132,10 @@ public class CraftUI : UIElement
 				}
 			}
 		}
-		Debug.Log("wow");
 		for (int j = 0; j < rec.results.Count; j++)
 		{
 			string itemName = rec.results[j].name;
 			int requiredCount = rec.results[j].count;
-			Debug.Log(itemName);
 			for (int k = 0; k < requiredCount; k++)
 			{
 				Player.instance.inventory.AddItem(itemFactory.BuildItemScript(itemName));

@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using SimpleJSON;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 
 namespace CassandraFramework.Dialogues
@@ -23,12 +20,6 @@ namespace CassandraFramework.Dialogues
 		/****************************************************************************************/
 		/*										METHODS									  		*/
 		/****************************************************************************************/
-
-		public void SetRequirements(List<IRequirement> r)
-		{
-			requirements.requirements.Clear();
-			requirements.requirements = r;
-		}
 
 		public bool Ready()
 		{

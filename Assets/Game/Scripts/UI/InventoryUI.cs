@@ -75,7 +75,6 @@ public class InventoryUI : UIElement
 
 	private void ShowInventory()
 	{
-		Debug.Log("Show");
 		Clear();
 		inventory = Player.instance.inventory;
 		itemList = inventory.GetItemList();
@@ -150,7 +149,6 @@ public class InventoryUI : UIElement
 		int index = buttonsIndexes[button];
 		Item item = itemList[index].itemList[0];
 		item.Use();
-		inventory.RemoveItem(item);
 		ShowInventory();
 	}
 

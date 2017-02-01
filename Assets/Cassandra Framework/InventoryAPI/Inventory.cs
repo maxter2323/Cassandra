@@ -19,6 +19,7 @@ namespace CassandraFramework.Items
 		private float weight = 0.0f;
 		private Dictionary<string, ItemGroup> inventory = new Dictionary<string, ItemGroup>();
 
+		public Character owner;
 		public ItemEvent OnItemAdded = new ItemEvent();
 		public ItemEvent OnItemRemoved = new ItemEvent();
 
@@ -76,6 +77,7 @@ namespace CassandraFramework.Items
 				}
 				inventory.Add(itemKey, newGroup);
 			}
+			newItem.currentContainer = this;
 			if (OnItemAdded != null) OnItemAdded.Invoke(newItem);
 		}
 

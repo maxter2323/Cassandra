@@ -38,18 +38,14 @@ namespace CassandraFramework.Stats
 		{
 			key = k;
 			name = k;
-			minValue = cV;
-			maxValue = minV;
-			Value = maxV;
+			minValue = minV;
+			maxValue = maxV;
+			Value = cV;
 		}
 
-		public Stat(string k, string n, int cV, int minV, int maxV)
+		public Stat(string k, string n, int cV, int minV, int maxV): this(k, cV, minV, maxV)
 		{
-			key = k;
 			name = n;
-			minValue = cV;
-			maxValue = minV;
-			Value = maxV;
 		}
 
 		public Stat(string k, int cV, int minV, int maxV, string t):this(k, cV, minV, maxV)
@@ -85,12 +81,12 @@ namespace CassandraFramework.Stats
 				if(curValue == value) return;
 				curValue = value;
 				if (OnValueChanged != null) OnValueChanged.Invoke(this);
-				if (curValue >= maxValue)
+				if (curValue > maxValue)
 				{
 					curValue = maxValue;
 					if (OnValueReachedMax != null) OnValueReachedMax.Invoke(this);
 				} 
-				if (curValue <= minValue) 
+				if (curValue < minValue) 
 				{
 					curValue = minValue;
 					if (OnValueReachedMin != null) OnValueReachedMin.Invoke(this);

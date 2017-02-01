@@ -13,7 +13,7 @@ public class Requirements
 	public List<IRequirement> requirements = new List<IRequirement>();
 
 	/****************************************************************************************/
-	/*										Perks MANAGEMENT								*/
+	/*										METHODS											*/
 	/****************************************************************************************/
 
 	public void Set(List<IRequirement> r)

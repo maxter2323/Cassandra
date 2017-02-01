@@ -19,7 +19,7 @@ namespace CassandraFramework.Perks
 
 		public Character owner;
 		public Requirements requirements = new Requirements();
-		public List<IEffect> effects = new List<IEffect>();
+		public Effects effects = new Effects();
 
 		[NonSerialized] public PerkStringEvent OnTagChanged = new PerkStringEvent();
 
@@ -47,13 +47,7 @@ namespace CassandraFramework.Perks
 		{
 			List<GameScript> toreturn = new List<GameScript>();
 			toreturn.AddRange(requirements.GetAllScripts());
-			for (int i = 0; i < effects.Count; i++)
-			{
-				if (effects[i] is CustomEffect)
-				{
-					toreturn.Add(((CustomEffect)effects[i]).script);
-				}
-			}
+			toreturn.AddRange(effects.GetAllScripts());
 			return toreturn;
 		}
 
@@ -69,10 +63,7 @@ namespace CassandraFramework.Perks
 
 		public void ApplyEffects()
 		{
-			for (int i = 0; i < effects.Count; i++)
-			{
-				effects[i].Do();
-			}
+			effects.Do();
 		}
 	}
 }

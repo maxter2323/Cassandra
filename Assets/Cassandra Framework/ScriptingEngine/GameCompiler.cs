@@ -28,7 +28,7 @@ public static class GameCompiler
 		if (result.Errors.Count > 0) {
 			var msg = new StringBuilder();
 			foreach (CompilerError error in result.Errors) {
-				Debug.Log("WOW: " + GetLine(source,  error.Line));
+				Debug.Log("ERROR: " + GetLine(source,  error.Line));
 				msg.AppendFormat("Error ({0}) in {4}: LINE: {2},  COLUMN: {3} {1}\n",
 					error.ErrorNumber, error.ErrorText, error.Line, error.Column, path);
 			}

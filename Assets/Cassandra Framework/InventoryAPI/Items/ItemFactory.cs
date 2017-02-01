@@ -22,7 +22,7 @@ namespace CassandraFramework.Items
 		public void Init () 
 		{
 			jsonParser = ServiceLocator.GetService<JsonParser>();
-			dataLocator = ServiceLocator.GetService<DataLocator>(); 
+			dataLocator = ServiceLocator.GetService<DataLocator>();
 		}
 
 		public Item BuildItemScript(string itemName)
@@ -44,7 +44,7 @@ namespace CassandraFramework.Items
 
 		private void BuildPersonalProperties(Item item, JSONNode jsonItem)
 		{
-			switch(jsonItem["category"])
+			switch(jsonItem["Category"])
 			{
 				case "WeaponItem":
 					BuildWeapon((WeaponItem)item, jsonItem);
@@ -63,7 +63,7 @@ namespace CassandraFramework.Items
 		private void BuildConsumable(ConsumableItem item, JSONNode jsonItem)
 		{
 			EffectFactory effectFactory = ServiceLocator.GetService<EffectFactory>();
-			item.effects = effectFactory.MakeEffectsFromJson(jsonItem, item.key);
+			item.effects.Set(effectFactory.JSON_To_Effects(jsonItem["CategoryData"], item.key));
 		}
 
 		public GameObject BuildItemObject(string itemName) 

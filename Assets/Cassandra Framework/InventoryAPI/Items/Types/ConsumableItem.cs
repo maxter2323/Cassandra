@@ -10,7 +10,7 @@ namespace CassandraFramework.Items
 		/*										VARIABLES									  	*/
 		/****************************************************************************************/
 
-		public List<IEffect> effects = new List<IEffect>();
+		public Effects effects = new Effects();
 
 		/****************************************************************************************/
 		/*										NATIVE METHODS									*/
@@ -18,10 +18,9 @@ namespace CassandraFramework.Items
 
 		public override void Use()
 		{
-			for (int i = 0; i < effects.Count; i++)
-			{
-				effects[i].Do();
-			}
+			effects.SetOwners(currentContainer.owner);
+			effects.Do();
+			currentContainer.owner.inventory.RemoveItem(this);
 		}
 
 	}

@@ -4,13 +4,22 @@ using System.Collections.Generic;
 
 public class CoroutineService : MonoBehaviour
 {
+
+	/****************************************************************************************/
+	/*										VARIABLES									  	*/
+	/****************************************************************************************/
+
 	static private List<IEnumerator> routineStorage = new List<IEnumerator>();
 	static private GameObject instance;
+
+	/****************************************************************************************/
+	/*										METHODS											*/
+	/****************************************************************************************/
 
 	static private void InstantiateSelf()
 	{
 		GameObject emptyObj = new GameObject("Coroutine Service");
-		instance = GameObject.Instantiate(emptyObj);
+		instance = Instantiate(emptyObj);
 		instance.AddComponent<CoroutineService>();
 		DontDestroyOnLoad(instance);
 	}

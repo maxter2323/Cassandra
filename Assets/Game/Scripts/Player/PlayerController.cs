@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using CassandraFramework.Quests;
 
 public class PlayerController
@@ -11,7 +10,7 @@ public class PlayerController
 	private UIManager uiManager;
 	
 	/****************************************************************************************/
-	/*										NATIVE METHODS									*/
+	/*										CONTROLLER METHODS								*/
 	/****************************************************************************************/
 
 	public PlayerController()
@@ -23,6 +22,7 @@ public class PlayerController
 	{
 		InventoryAccess();
 		QuestAccess();
+		StatsAccess();
 	}
 
 	private void InventoryAccess()
@@ -31,15 +31,26 @@ public class PlayerController
 		{
 			if (uiManager.HasUI(N.UI.INVENTORY_UI))
 			{
-				uiManager.MakeUI(N.UI.Tiled.PLAYER_UI);
-				uiManager.DeleteUI(N.UI.INVENTORY_UI);
-				//Player.instance.updatePlayer = true;
+				ShowPlayerHideCurrent(N.UI.INVENTORY_UI);
 			}
 			else
 			{
-				uiManager.DeleteUI(N.UI.Tiled.PLAYER_UI);
-				uiManager.MakeUI(N.UI.INVENTORY_UI);
-				//Player.instance.updatePlayer = false;
+				HidePlayerShowCurrent(N.UI.INVENTORY_UI);
+			}
+		}
+	}
+
+	private void StatsAccess()
+	{
+		if (Input.GetKeyUp(KeycodeService.StatsAccess()))
+		{
+			if (uiManager.HasUI(N.UI.STATS_UI))
+			{
+				ShowPlayerHideCurrent(N.UI.STATS_UI);
+			}
+			else
+			{
+				HidePlayerShowCurrent(N.UI.STATS_UI);
 			}
 		}
 	}
@@ -51,10 +62,27 @@ public class PlayerController
 			Quest q = Player.instance.quests.currentQuest;
 			if (q == null)
 			{
-				Debug.Log("No current quest");
 				return;
 			}
 			Debug.Log(q.name + ": " + q.currentStageIndex + ". " + q.currentStage.log);
 		}
+	}
+
+	/****************************************************************************************/
+	/*										GENERAL METHODS									*/
+	/****************************************************************************************/
+
+	private void ShowPlayerHideCurrent(string uiToHide)
+	{
+		uiManager.DeleteUI(uiToHide);
+		uiManager.MakeUI(N.UI.PLAYER_UI);
+		//Player.instance.updatePlayer = true;
+	}
+
+	private void HidePlayerShowCurrent(string uiToShow)
+	{
+		uiManager.DeleteUI(N.UI.PLAYER_UI);
+		uiManager.MakeUI(uiToShow);
+		//Player.instance.updatePlayer = false;
 	}
 }

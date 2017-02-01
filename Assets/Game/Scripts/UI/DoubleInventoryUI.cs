@@ -47,7 +47,7 @@ public class DoubleInventoryUI : UIElement
 		if (Input.GetKey(KeyCode.Escape))
 		{
 			Player.instance.updatePlayer = true;
-			ServiceLocator.GetService<UIManager>().MakeUI(N.UI.Tiled.PLAYER_UI);
+			ServiceLocator.GetService<UIManager>().MakeUI(N.UI.PLAYER_UI);
 			ServiceLocator.GetService<UIManager>().DeleteUI(N.UI.DOUBLE_INVENTORY_UI);
 			return;
 		}
@@ -109,7 +109,6 @@ public class DoubleInventoryUI : UIElement
 		else
 		{
 			index = buttonsIndexesRight[button];
-			Debug.Log(index);
 			ItemGroup itemGroup = itemListRight[index];
 			Item item = itemGroup.GetAt(0);
 			inventoryLeft.AddItem(item, itemGroup.Count());

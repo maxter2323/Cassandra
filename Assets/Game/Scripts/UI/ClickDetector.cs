@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using System.Collections;
 
 public class ClickDetector : MonoBehaviour, IPointerClickHandler
 {
@@ -24,13 +22,13 @@ public class ClickDetector : MonoBehaviour, IPointerClickHandler
 		{
 			case PointerEventData.InputButton.Left:
 				if (LeftClick != null) LeftClick.Invoke(this.gameObject);
-			break;
+				break;
 			case PointerEventData.InputButton.Right:
 				if (RightClick != null)	RightClick.Invoke(this.gameObject);
-			break;
+				break;
 			case PointerEventData.InputButton.Middle:
 				if (MiddleClick != null) MiddleClick.Invoke(this.gameObject);
-			break;
+				break;
 		}
 	}
 }

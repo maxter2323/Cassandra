@@ -1,11 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SimpleJSON;
 
 namespace CassandraFramework.Dialogues
 {
-
 	public class DialogueFactory : IService, IFactory 
 	{
 		/****************************************************************************************/
@@ -29,7 +26,7 @@ namespace CassandraFramework.Dialogues
 		private const string JSON_DIALOGUE_REQUIREMENTS = "Requirements";
 		
 		/****************************************************************************************/
-		/*										METHODS											*/
+		/*										ADD METHODS										*/
 		/****************************************************************************************/
 
 		public void Init () 
@@ -53,6 +50,10 @@ namespace CassandraFramework.Dialogues
 			if (!dialogues.ContainsKey(dialogueKey)) return null;
 			return dialogues[dialogueKey];
 		}
+
+		/****************************************************************************************/
+		/*										MAKE METHODS									*/
+		/****************************************************************************************/
 
 		public List<IGameScriptable> MakeAll()
 		{

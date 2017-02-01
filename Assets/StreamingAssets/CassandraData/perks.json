@@ -24,10 +24,10 @@
             {"Type":"Stat", "Key":"Health", "Arg": "Set", "Value": 100}
         ],
         "CustomEffects":[
-        {
+            {
                 "Name":"MyAwesomeEffect", 
                 "Description":"Does awesome things", 
-                "Script": "CastFireballs();"
+                "Script": "return true;"
             }
         ]
     }
@@ -59,7 +59,27 @@
         {
                 "Name":"MyAwesomeEffect", 
                 "Description":"Does awesome things", 
-                "Script": "CastFireballs();"
+                "Script": "return true;"
+            }
+        ]
+    }
+},
+"Increase Speed": 
+{
+    "Key": "SpeedIncrease",
+    "Name": "Template",
+    "Tag": "Ability",
+    "TagName": "Ability",
+    "Description": "Increases speed by 4",
+    "Effects":{
+        "CassandraEffects":[
+            {"Type":"Stat", "Key":"Speed", "Arg": "Increase", "Value": 4}
+        ],
+        "CustomEffects":[
+        {
+                "Name":"MyAwesomeEffect", 
+                "Description":"Does awesome things", 
+                "Script": "return true;"
             }
         ]
     }

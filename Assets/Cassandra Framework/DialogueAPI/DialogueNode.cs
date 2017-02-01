@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
 
 namespace CassandraFramework.Dialogues
 {
@@ -19,6 +17,11 @@ namespace CassandraFramework.Dialogues
 		/*										 METHODS										*/
 		/****************************************************************************************/
 
+		public void AddOption(DialogueOption n)
+		{
+			options.Add(n);
+		}
+
 		public void RemoveOption(int indexOption)
 		{
 			options.RemoveAt(indexOption);
@@ -34,9 +37,5 @@ namespace CassandraFramework.Dialogues
 			return options;
 		}
 
-		public void AddOption(DialogueOption n)
-		{
-			options.Add(n);
-		}
 	}
 }

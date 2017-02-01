@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
 
 public class Movement 
 {
@@ -9,43 +8,48 @@ public class Movement
 	/****************************************************************************************/
 
 	private bool isMoving = false;
-	private int moveSpeed = 4;
-	private Vector3 dest;
+	private Vector3 destination;
 	public float distanceToObject = 0.1f;
-
-	public UnityEvent TargetReached = new UnityEvent();
+	public UnityEvent OnTargetReached = new UnityEvent();
 	public GameObject view;
 
 	/****************************************************************************************/
-	/*										NATIVE METHODS									*/
+	/*										 METHODS										*/
 	/****************************************************************************************/
 	
 	public void MoveTo(int x, int y)
 	{
-		TargetReached = new UnityEvent();
-		Animator anim = view.GetComponentInChildren<Animator>();
-		anim.Play("Run");
+		destination = new Vector3(x, 0, y);
+		OnTargetReached = new UnityEvent();
+		view.GetComponentInChildren<Animator>().Play("Run");
+		view.transform.LookAt(destination);
 		isMoving = true;
-		dest = new Vector3(x, 0, y);
 	}
 	
 	public void Update () 
 	{
 		if (isMoving)
 		{
-			Vector3 movementVec = dest - view.transform.position;
-			if (movementVec.magnitude < distanceToObject)
-			{
-				isMoving = false;
-				Animator anim = view.GetComponentInChildren<Animator>();
-				anim.Play("Idle");
-				TargetReached.Invoke();
-				return;
-			}
-			view.transform.LookAt(dest);
-			view.transform.Translate(movementVec.normalized * moveSpeed * Time.deltaTime, Space.World);
+			Move();
 		}
 	}
 
+	private void Move()
+	{
+		Vector3 movementVec = destination - view.transform.position;
+		if (movementVec.magnitude < distanceToObject)
+		{
+			StopMoving();
+			return;
+		}
+		int speed = Player.instance.stats.GetStat("Speed").Value;
+		view.transform.Translate(movementVec.normalized * speed * Time.deltaTime, Space.World);
+	}
 
+	private void StopMoving()
+	{
+		isMoving = false;
+		view.GetComponentInChildren<Animator>().Play("Idle");
+		OnTargetReached.Invoke();
+	}
 }

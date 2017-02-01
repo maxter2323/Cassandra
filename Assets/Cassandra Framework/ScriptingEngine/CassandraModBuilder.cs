@@ -69,7 +69,7 @@ public class CassandraModBuilder : IService
 		}
 		mod.assembly = GameCompiler.CompileAsBytes(USINGS_STRING + finalAssemblySource);
 		Save(CASSANDRA_CORE_NAME + CASSANDRA_FILE_FORMAT, mod);
-		Debug.Log("Everything is build");
+		Debug.Log("Cassandra: everything is build to " + CASSANDRA_CORE_NAME + CASSANDRA_FILE_FORMAT);
 	}
 
 	private void AddScriptToFinalAssembly(ref string assemblySource, List<GameScript> scripts)

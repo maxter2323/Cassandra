@@ -9,13 +9,13 @@
         {
             "0": 
             {
-                "Log": "Find JerryCan for Ethan",
+                "Log": "Find jerrycan for Ethan",
                 "Goto": 1,
                 "Script": 
                 "
                         Debug.Log(\"Eeelco\");
                         Quest q = ServiceLocator.GetService<QuestFactory>().GetQuest(\"Tutorial\");
-                        if (Player.instance.inventory.HasItem(\"Jerry\"))
+                        if (Player.instance.inventory.HasItem(\"Jerrycan\"))
                         {
                             q.StartStage(1);
                         }
@@ -28,7 +28,7 @@
 
                     public void OnJerryAdded(Item i)
                     {
-                        if (i.name == \"Jerry\")
+                        if (i.name == \"Jerrycan\")
                         {
                             Player.instance.inventory.OnItemAdded.RemoveListener(OnJerryAdded);
                             Quest q = ServiceLocator.GetService<QuestFactory>().GetQuest(\"Tutorial\");
@@ -39,7 +39,7 @@
             },
             "1": 
             {
-                "Log": "JerryCan found! Bring it to Ethan",
+                "Log": "Jerrycan found! Bring it to Ethan",
                 "Goto": 2,
                 "Script": "
                     Debug.Log(\"Stage 2 started\");
@@ -49,35 +49,13 @@
 
                     public void OnJerryRemoved(Item i)
                     {
-                        if (i.name == \"Jerry\")
+                        if (i.name == \"Jerrycan\")
                         {
                             Player.instance.inventory.OnItemRemoved.RemoveListener(OnJerryRemoved);
                             Quest q = ServiceLocator.GetService<QuestFactory>().GetQuest(\"Tutorial\");
                             q.StartStage(0);
                         }
                 "
-            }
-        }
-    },
-    "TestCompile": 
-    {
-        "Key": "TestCompile",
-        "Name": "TestCompile",
-        "Description": "Lets compile this",
-        "Hidden": true,
-        "Stages":
-        {
-            "0": 
-            {
-                "Log": "Proof that it is working",
-                "Goto": 0,
-                "Script": "Debug.Log(\"Script is working wow\");"
-            },
-            "1": 
-            {
-                "Log": "Proof that it is working",
-                "Goto": 2,
-                "Script": "Debug.Log(\"Script is working wow\");"
             }
         }
     }

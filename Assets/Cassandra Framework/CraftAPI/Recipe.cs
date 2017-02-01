@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class Recipe : MonoBehaviour 
+public class Recipe : IGameScriptable 
 {
 	/****************************************************************************************/
 	/*										VARIABLES									  	*/
@@ -27,4 +28,13 @@ public class Recipe : MonoBehaviour
 	public List<Requirement> requirements = new List<Requirement>();
 	public List<Result> results = new List<Result>();
 
+	public IFactory GetFactory()
+	{
+		return ServiceLocator.GetService<RecipeFactory>();
+	}
+
+	public List<GameScript> GetAllScripts()
+	{
+		throw new NotImplementedException();
+	}
 }

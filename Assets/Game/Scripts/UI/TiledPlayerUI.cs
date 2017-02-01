@@ -37,10 +37,10 @@ public class TiledPlayerUI : UIElement
 				{
 					if (selectedTile != null) selectedTile.GetComponent<Renderer>().material.color = Color.white;
 					selectedTile = hit.transform.gameObject;
-					selectedTile.GetComponent<Renderer>().material.color = Color.red;
+					selectedTile.GetComponent<Renderer>().material.color = Color.cyan;
 
 					Tile tile = selectedTile.GetComponent<Tile>();
-					infoText.text = "X: " + tile.x + " Y: " + tile.z;
+					infoText.text = "<b> </b>";
 				}
 
 				if(Input.GetMouseButtonUp(0))
@@ -58,37 +58,37 @@ public class TiledPlayerUI : UIElement
 
 			if (hit.transform.gameObject.tag == "NPC")
 			{
-				infoText.text = "Talk to ";
+				infoText.text = "<b>Talk to </b>";
 				if(Input.GetMouseButtonUp(0))
 				{
 					lastNPC = hit.transform.gameObject;
 					Player.instance.movement.distanceToObject = 1.0f;
 					Player.instance.movement.MoveTo((int)hit.transform.position.x, (int)hit.transform.position.z);
-					Player.instance.movement.TargetReached.AddListener(InteractWithCharacter);
+					Player.instance.movement.OnTargetReached.AddListener(InteractWithCharacter);
 				}
 			}
 
 			if (hit.transform.gameObject.tag == "Container")
 			{
-				infoText.text = "Open";
+				infoText.text = "<b>Open</b>";
 				if(Input.GetMouseButtonUp(0))
 				{
 					lastContainer = hit.transform.gameObject;
 					Player.instance.movement.distanceToObject = 1.0f;
 					Player.instance.movement.MoveTo((int)hit.transform.position.x, (int)hit.transform.position.z);
-					Player.instance.movement.TargetReached.AddListener(InteractWithContainer);
+					Player.instance.movement.OnTargetReached.AddListener(InteractWithContainer);
 				}
 			}
 
 			if (hit.transform.gameObject.tag == "WorkBench")
 			{
-				infoText.text = "Craft";
+				infoText.text = "<b>Craft</b>";
 				if(Input.GetMouseButtonUp(0))
 				{
 					lastBench = hit.transform.gameObject;
 					Player.instance.movement.distanceToObject = 1.0f;
 					Player.instance.movement.MoveTo((int)hit.transform.position.x, (int)hit.transform.position.z);
-					Player.instance.movement.TargetReached.AddListener(InteractWithWorkbench);
+					Player.instance.movement.OnTargetReached.AddListener(InteractWithWorkbench);
 				}
 			}
 
@@ -101,7 +101,7 @@ public class TiledPlayerUI : UIElement
 	{
 		UIManager uiService = ServiceLocator.GetService<UIManager>();
 		DialogueUI dUI = (DialogueUI)uiService.MakeUI(N.UI.DIALOGUE_UI);
-		uiService.DeleteUI(N.UI.Tiled.PLAYER_UI);
+		uiService.DeleteUI(N.UI.PLAYER_UI);
 		dUI.InitDialogueTiled(lastNPC.transform.parent.gameObject);
 		Player.instance.updatePlayer = false;
 	}
@@ -109,8 +109,8 @@ public class TiledPlayerUI : UIElement
 	private void InteractWithWorkbench()
 	{
 		UIManager uiService = ServiceLocator.GetService<UIManager>();
-		uiService.MakeUI(N.UI.CRAFT_UI).SetVisible(true);
 		CraftUI cUI = (CraftUI)uiService.MakeUI(N.UI.CRAFT_UI);
+		uiService.DeleteUI(N.UI.PLAYER_UI);
 		cUI.GetInfoTiled(lastBench.transform.parent.gameObject);
 		cUI.ShowButtons();
 	}
@@ -122,7 +122,7 @@ public class TiledPlayerUI : UIElement
 		iUI.inventoryLeft = Player.instance.inventory;
 		iUI.inventoryRight = lastContainer.GetComponent<Container>().inventory;
 		iUI.ShowInventory();
-		uiService.DeleteUI(N.UI.Tiled.PLAYER_UI);
+		uiService.DeleteUI(N.UI.PLAYER_UI);
 		Player.instance.updatePlayer = false;
 	}
 

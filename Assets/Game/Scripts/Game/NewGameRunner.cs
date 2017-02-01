@@ -39,6 +39,7 @@ public class NewGameRunner
 		//Make UI for the player
 		UIManager uiManager = ServiceLocator.GetService<UIManager>();
 		uiManager.MakeUI(N.UI.PLAYER_UI);
+		uiManager.MakeUI(N.UI.NOTIFICATION_UI);
 
 		//Start updatring the game
 		gameHolder.game.updateGame = true;

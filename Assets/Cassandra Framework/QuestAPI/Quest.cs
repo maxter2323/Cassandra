@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using CassandraEvents;
 
 namespace CassandraFramework.Quests
 {
@@ -32,6 +33,8 @@ namespace CassandraFramework.Quests
 		}
 		public QuestStatus status = QuestStatus.Inactive;
 
+		[NonSerialized] public QuestStageEvent OnStageStarted = new QuestStageEvent();
+
 		/****************************************************************************************/
 		/*											METHODS										*/
 		/****************************************************************************************/
@@ -50,6 +53,7 @@ namespace CassandraFramework.Quests
 			stages[index].script.Run();
 			currentStageIndex = index;
 			currentStage = stages[index];
+			if (OnStageStarted != null) OnStageStarted.Invoke(this, currentStage);
 		}
 
 		public void AddStage(QuestStage stage)

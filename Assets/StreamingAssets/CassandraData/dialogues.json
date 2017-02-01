@@ -23,7 +23,7 @@
                         "CustomRequirements":[
                             {"Script": "return !(Player.instance.quests.QuestStarted(\"Tutorial\"));"}
                         ]},
-                    "Script":"Player.instance.quests.StartQuest(\"Tutorial\"); Player.instance.inventory.AddItem(\"Pistol\"); Debug.Log(111222333);"
+                    "Script":"Player.instance.quests.StartQuest(\"Tutorial\"); Player.instance.inventory.AddItem(\"Pistol\");"
                 
                 },
                 "2":
@@ -54,6 +54,16 @@
                         Dialogue d = ServiceLocator.GetService<DialogueFactory>().GetDialogue(\"Ethan_Dialogue\");
                         d.RemoveOptionFromNode(0, 3);
                     "
+                },
+                "25":
+                { 
+                    "Text": "Remind me again, what should I do?",
+                    "Reply": "Find and bring me a jerrycan.",
+                    "Goto": 0,
+                    "Requirements":{
+                        "CustomRequirements":[
+                            {"Script": "return Player.instance.quests.QuestActive(\"Tutorial\");"}
+                        ]},
                 },
                 "4":
                 {

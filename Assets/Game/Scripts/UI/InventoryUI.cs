@@ -83,7 +83,7 @@ public class InventoryUI : UIElement
 			GameObject newButton = GameObject.Instantiate(buttonWithImagePrefab);
 			newButton.transform.SetParent(buttonPanel.transform, false);
 			//newButton.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-			inventoryButtons.Add(newButton.GetComponentInChildren<Button>().gameObject);
+			inventoryButtons.Add(newButton.GetComponentInChildren<Button>().gameObject.transform.parent.gameObject);
 			buttonsIndexes[newButton.GetComponentInChildren<Button>().gameObject] = i;
 			Text textScript = newButton.GetComponentInChildren<Text>();
 			textScript.text = itemList[i].itemList[0].name;

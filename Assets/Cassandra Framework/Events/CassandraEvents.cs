@@ -18,6 +18,7 @@ namespace CassandraEvents
 
 	//Quests
 	public class QuestEvent : UnityEvent<Quest> {}
+	public class QuestStageEvent : UnityEvent<Quest, QuestStage> { }
 
 	//Dialogues
 	public class DialgoueEvent : UnityEvent<Dialogue> {}

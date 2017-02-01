@@ -16,6 +16,7 @@
 	{
 		public const string MAIN_MENU_UI = "MainMenuUI";
 		public const string LOADING_UI = "LoadingUI";
+		public const string NOTIFICATION_UI = "NotificationUI";
 		public const string PLAYER_UI = "PlayerUI";
 		public const string STATS_UI = "StatsUI";
 		public const string INVENTORY_UI = "InventoryUI";

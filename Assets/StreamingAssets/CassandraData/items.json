@@ -1,0 +1,87 @@
+{
+	"Pistol": 
+	{
+		"Name": "Pistol",
+		"Key": "Pistol",
+		"Description": "Super Gun",
+		"Icon": "pistolIcon.png",
+		"Weight": 2.0,
+		"ItemType": "Quality",
+		"Category": "WeaponItem",
+		"CategoryData":
+		{
+			"Slot:": "Weapon",
+			"ClipSize" : 10,
+			"AmmoType" : "9mm"
+		}
+	},
+	"Water": 
+	{
+		"Name": "Water",
+		"Key": "Water",
+		"Description": "Awesome Drink",
+		"Icon": "waterIcon.png",
+		"Weight": 0.5,
+		"ItemType": "Quantity",
+		"Category": "ConsumableItem",
+		"CategoryData":
+		{
+			"Effects":
+			{
+				"CassandraEffects":[
+					{"Type":"Stat", "Key":"Speed", "Arg": "Increase", "Value": 4, "Time": 10000}
+				]
+			}
+		}
+	},
+	"Jacket": 
+	{
+		"Name": "Jacket",
+		"Key": "Jacket",
+		"Description": "Nice leather jacket",
+		"Icon": "jacketIcon.png",
+		"Weight": 3.0,
+		"ItemType": "Quantity",
+		"Category": "ApparelItem",
+		"CategoryData":
+		{
+			"Slot:": "Body",
+			"Effects":
+			{
+				"CassandraEffects":[
+					{"Type":"Stat", "Key":"Defence", "Arg": "Increase", "Value": 5, "Time": 0}
+				]
+			}
+		}
+	},
+	"Helmet": 
+	{
+		"Name": "Helmet",
+		"Key": "Helmet",
+		"Description": "Good iron helmet",
+		"Icon": "helmetIcon.png",
+		"Weight": 1.0,
+		"ItemType": "Quantity",
+		"Category": "ApparelItem",
+		"CategoryData":
+		{
+			"Slot:": "Head",
+			"Effects":
+			{
+				"CassandraEffects":[
+					{"Type":"Stat", "Key":"Defence", "Arg": "Increase", "Value": 10, "Time": 0}
+				]
+			}
+		}
+	},
+	"Jerrycan": 
+	{
+		"Name": "Jerrycan",
+		"Key": "Jerrycan",
+		"Description": "Jerrycan with water",
+		"Icon": "jerryIcon.png",
+		"Weight": 2.0,
+		"ItemType": "Quantity",
+		"Category": "MiscItem"
+	}
+}
